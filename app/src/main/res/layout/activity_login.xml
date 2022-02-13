@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".LoginActivity"
     android:layout_height="match_parent"
-    android:background="#27AAE1"
     android:layout_width="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#673AB7"
         android:scaleType="fitXY"/>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        app:cardElevation="10dp"
+        app:cardCornerRadius="15dp"
+        android:layout_gravity="center">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="429dp"
             android:gravity="center"
             android:orientation="vertical"
@@ -28,19 +32,25 @@
                 android:id="@+id/loginEmailEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:inputType="textEmailAddress"
+                android:layout_marginBottom="10dp"
                 android:hint="Enter email"/>
             <EditText
                 android:id="@+id/loginPassEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:layout_marginBottom="20dp"
                 android:hint="Password"/>
             <Button
-                android:layout_width="100dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:onClick="loginClick"
                 android:text="Login"
+                android:background="#0000ff"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:layout_marginBottom="10dp"/>
 
 
@@ -65,13 +75,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:onClick="createAccountClick"
-                    android:text="New here? Sign up"
+                    android:text="Create new account"
                     android:textColor="#ff0000" />
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/loginProgress"

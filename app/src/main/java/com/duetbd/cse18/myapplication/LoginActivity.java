@@ -1,6 +1,7 @@
 package com.duetbd.cse18.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -8,18 +9,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         progressLogin=findViewById(R.id.loginProgress);
         progressLogin.setVisibility(View.INVISIBLE);
-        //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 
@@ -50,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser firebaseUser=mAuth.getCurrentUser();
         if(firebaseUser!=null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), UserMainActivity.class));
             finish();
         }
     }
@@ -64,15 +67,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signUpClick(View view){
 
-
-
+        
         final String name,mail,phone,ins,pass;
+        boolean isAdmin=((Spinner)findViewById(R.id.signup_isAdminSp)).getSelectedItem().toString().equals("Admin")?true:false;
         name=((EditText)findViewById(R.id.signup_nameEt)).getText().toString();
         mail=((EditText)findViewById(R.id.signup_emailEt)).getText().toString();
         phone=((EditText)findViewById(R.id.signup_phoneEt)).getText().toString();
         ins=((EditText)findViewById(R.id.signup_instituteEt)).getText().toString();
         pass=((EditText)findViewById(R.id.signup_passEt)).getText().toString().toLowerCase().replace(" ","");;
-
+        
 
         if(name.equals("") || mail.equals("") || phone.equals("") || ins.equals("") || pass.equals("")){
             Toast.makeText(getApplicationContext(),"Please input first",Toast.LENGTH_SHORT).show();
@@ -90,10 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(getApplicationContext(),"User registered: "+user.getEmail(),Toast.LENGTH_SHORT).show();
-
-
-                        databaseReference.child("Users").child(user.getEmail().replace(".","!")).setValue(new MyUserData(name,mail,phone,ins));
-
+                        databaseReference.child("Users").push().setValue(new MyUserData(name,mail,phone,ins,isAdmin));
                         progressSignup.setVisibility(View.INVISIBLE);
                         alreadyAccountClick(null);
                     } else {
@@ -131,15 +131,36 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(getApplicationContext(),"Success!",Toast.LENGTH_SHORT).show();
-
-                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+                Toast.makeText(getApplicationContext(),"Login Success!",Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference("Users").addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                         MyUserData myUserData=snapshot.getValue(MyUserData.class);
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        progressLogin.setVisibility(View.INVISIBLE);
-                        finish();
+                        if(email.equals(myUserData.getEmail())){
+                            Log.e("=====",myUserData.isAdmin()?"Admin":"User");
+                            if(myUserData.isAdmin())
+                                startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
+                            else
+                                startActivity(new Intent(getApplicationContext(), UserMainActivity.class));
+                            progressLogin.setVisibility(View.INVISIBLE);
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                     }
 
                     @Override

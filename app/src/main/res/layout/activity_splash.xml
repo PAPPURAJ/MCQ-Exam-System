@@ -10,10 +10,10 @@
     tools:context=".SplashActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="221dp"
+        android:layout_height="205dp"
         android:layout_margin="50dp"
-        android:src="@drawable/ic_launcher_background"/>
+        android:src="@drawable/mcq_icon" />
     <ProgressBar
         android:id="@+id/splashProgBar"
         android:layout_marginTop="80dp"

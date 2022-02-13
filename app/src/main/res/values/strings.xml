@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MCQ Exam System</string>
+
+    <string-array name="userType">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
 </resources>
