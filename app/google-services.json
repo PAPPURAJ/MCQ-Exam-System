@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "588091325566",
+    "firebase_url": "https://mcq-exam-system-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mcq-exam-system",
+    "storage_bucket": "mcq-exam-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588091325566:android:e55bfedbd8e632d4f1ac2f",
+        "android_client_info": {
+          "package_name": "com.duetbd.cse18.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588091325566-pq9sb9ejnk29c08u2l0d91rg9bd50vd4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMn1Jc4fDuXZ0ZSAaaDOp27qVjrHkbQzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588091325566-pq9sb9ejnk29c08u2l0d91rg9bd50vd4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
