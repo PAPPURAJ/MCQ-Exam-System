@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.duetbd.cse18.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MCQExamSystem">
         <activity
-            android:name=".AdminMainActivity"
+            android:name=".admin.AdminMainActivity"
             android:exported="false"
             android:label="Admin dashboard"/>
         <activity
-            android:name=".UserMainActivity"
+            android:name=".user.UserMainActivity"
             android:exported="false"
             android:label="User dashboard"/>
         <activity

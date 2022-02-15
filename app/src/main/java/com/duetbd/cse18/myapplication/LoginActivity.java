@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.duetbd.cse18.myapplication.admin.AdminMainActivity;
+import com.duetbd.cse18.myapplication.user.UserMainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -27,7 +29,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         progressLogin=findViewById(R.id.loginProgress);
         progressLogin.setVisibility(View.INVISIBLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // startActivity(new Intent(getApplicationContext(),MainActivity.class));
+         startActivity(new Intent(getApplicationContext(),AdminMainActivity.class));
     }
 
     @Override
@@ -53,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser firebaseUser=mAuth.getCurrentUser();
         if(firebaseUser!=null){
-            startActivity(new Intent(getApplicationContext(), UserMainActivity.class));
-            finish();
+            //startActivity(new Intent(getApplicationContext(), UserMainActivity.class));
+            //finish();
         }
     }
 
@@ -114,8 +115,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginClick(View view){
+
+        EditText emailEt=findViewById(R.id.loginEmailEt);
+
+
         final String email, pass;
-        email=((EditText)findViewById(R.id.loginEmailEt)).getText().toString().replace(" ","").toLowerCase();
+        email=emailEt.getText().toString().replace(" ","").toLowerCase();
         pass=((EditText)findViewById(R.id.loginPassEt)).getText().toString();
 
         if(email.equals("") || pass.equals(""))

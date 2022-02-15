@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private int progress=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
