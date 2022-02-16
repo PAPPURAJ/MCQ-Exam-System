@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.util.Printer;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -35,18 +37,17 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private ProgressBar progressLogin,progressSignup;
-
-
-
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sp=getSharedPreferences("Login", MODE_PRIVATE);
         progressLogin=findViewById(R.id.loginProgress);
         progressLogin.setVisibility(View.INVISIBLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-         startActivity(new Intent(getApplicationContext(),AdminMainActivity.class));
+      //   startActivity(new Intent(getApplicationContext(),AdminMainActivity.class));
     }
 
     @Override
@@ -54,8 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser firebaseUser=mAuth.getCurrentUser();
         if(firebaseUser!=null){
-            //startActivity(new Intent(getApplicationContext(), UserMainActivity.class));
-            //finish();
+            if(sp.getBoolean("admin",false))
+                startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
+            else
+                startActivity(new Intent(getApplicationContext(), UserMainActivity.class));
+            finish();
         }
     }
 
@@ -143,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                         MyUserData myUserData=snapshot.getValue(MyUserData.class);
                         if(email.equals(myUserData.getEmail())){
                             Log.e("=====",myUserData.isAdmin()?"Admin":"User");
+                            sp.edit().putBoolean("admin",myUserData.isAdmin()).apply();
                             if(myUserData.isAdmin())
                                 startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
                             else
