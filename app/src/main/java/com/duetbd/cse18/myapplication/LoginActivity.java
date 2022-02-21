@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                         MyUserData myUserData=snapshot.getValue(MyUserData.class);
                         if(email.equals(myUserData.getEmail())){
-                            Log.e("=====",myUserData.isAdmin()?"Admin":"User");
+                            //Log.e("=====",myUserData.isAdmin()?"Admin":"User");
                             sp.edit().putBoolean("admin",myUserData.isAdmin()).apply();
                             if(myUserData.isAdmin())
                                 startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
