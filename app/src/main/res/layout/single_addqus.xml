@@ -46,6 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Option 4"/>
+        <Spinner
+            android:id="@+id/addQusAns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/ansSerial"/>
 
     </LinearLayout>
 

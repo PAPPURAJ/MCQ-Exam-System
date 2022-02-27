@@ -5,18 +5,19 @@ import com.google.firebase.firestore.DocumentReference;
 
 public class QusData {
     private DocumentReference reference;
-    private String Question, option1,option2,option3,option4;
+    private String Question, option1,option2,option3,option4,ans;
 
     public QusData() {
     }
 
-    public QusData(DocumentReference reference, String Question, String option1, String option2, String option3, String option4) {
+    public QusData(DocumentReference reference, String Question, String option1, String option2, String option3, String option4,String ans) {
         this.reference = reference;
         this.Question = Question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
+        this.ans=ans;
     }
 
 
@@ -46,5 +47,9 @@ public class QusData {
 
     public String getOption4() {
         return option4;
+    }
+
+    public String getAns() {
+        return ans;
     }
 }

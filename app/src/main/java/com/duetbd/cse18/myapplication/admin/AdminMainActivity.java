@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duetbd.cse18.myapplication.LoginActivity;
@@ -85,6 +86,9 @@ public class AdminMainActivity extends AppCompatActivity {
         EditText op3Et=view.findViewById(R.id.addQusOp3Et);
         EditText op4Et=view.findViewById(R.id.addQusOp4Et);
 
+        Spinner spinner=view.findViewById(R.id.addQusAns);
+
+
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
@@ -103,7 +107,24 @@ public class AdminMainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        QusData qusData=new QusData(null,qus,op1,op2,op3,op4);
+                        String ans="";
+
+                        switch (spinner.getSelectedItem().toString()){
+                            case "1":
+                                ans=op1;
+                                break;
+                            case "2":
+                                ans=op2;
+                                break;
+                            case "3":
+                                ans=op3;
+                                break;
+                            case "4":
+                                ans=op4;
+                                break;
+                        }
+
+                        QusData qusData=new QusData(null,qus,op1,op2,op3,op4,ans);
 
                         FirebaseFirestore.getInstance().collection(firebaseField)
                                 .add(qusData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -136,6 +157,7 @@ public class AdminMainActivity extends AppCompatActivity {
                         String op2=qns.getDocuments().get(i).getString("option2");
                         String op3=qns.getDocuments().get(i).getString("option3");
                         String op4=qns.getDocuments().get(i).getString("option4");
+                        String ans=qns.getDocuments().get(i).getString("ans");
 
                         QusData myUserData=new QusData(
                                 qns.getDocuments().get(i).getReference(),
@@ -143,7 +165,8 @@ public class AdminMainActivity extends AppCompatActivity {
                                 op1,
                                 op2,
                                 op3,
-                                op4
+                                op4,
+                                ans
                         );
 
                         arrayList.add(myUserData);

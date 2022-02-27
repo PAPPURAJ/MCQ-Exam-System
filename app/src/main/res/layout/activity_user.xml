@@ -10,9 +10,20 @@
         android:id="@+id/userQusCountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1/20"
+        android:text="0/0"
         android:textSize="18dp"
         android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/userQusReportTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right: 0\nWrong: 0"
+        android:layout_gravity="right"
+        android:textSize="18dp"
+        android:layout_margin="10dp"/>
+
+
 
 
     <LinearLayout
